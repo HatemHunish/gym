@@ -1,5 +1,6 @@
 import numpy as np
-
+import random
+import cv2
 from gym.envs.robotics import rotations, robot_env, utils
 
 
@@ -60,7 +61,7 @@ class FetchEnv(robot_env.RobotEnv):
 
     # RobotEnv methods
     # ----------------------------
-
+	
     def _step_callback(self):
         if self.block_gripper:
             self.sim.data.set_joint_qpos('robot0:l_gripper_finger_joint', 0.)
@@ -71,7 +72,8 @@ class FetchEnv(robot_env.RobotEnv):
         assert action.shape == (4,)
         action = action.copy()  # ensure that we don't change the action outside of this scope
         pos_ctrl, gripper_ctrl = action[:3], action[3]
-
+        # print("------>",action)
+        #self.sim.data.set_joint_qpos('robot0:wrist_roll_joint', 0.)
         pos_ctrl *= 0.05  # limit maximum change in position
         rot_ctrl = [1., 0., 1., 0.]  # fixed rotation of the end effector, expressed as a quaternion
         gripper_ctrl = np.array([gripper_ctrl, gripper_ctrl])
@@ -83,13 +85,25 @@ class FetchEnv(robot_env.RobotEnv):
         # Apply action to simulation.
         utils.ctrl_set_action(self.sim, action)
         utils.mocap_set_action(self.sim, action)
+        
 
+        #cv2.waitKey();
+    def _get_image(self):
+        rgb, depth  = self.sim.render(500, 500, camera_name='wrist_camera_rgb', depth=True)
+        # print('Getting image ...')
+        return rgb ,depth
+        # cv2.imwrite('/home/user/Desktop/color_img.png',rgb)
+    def set_rotation(self,rotation=0):
+        # print("rotation:",rotation)
+        self.sim.data.set_joint_qpos('robot0:wrist_roll_joint',rotation)
     def _get_obs(self):
         # positions
         grip_pos = self.sim.data.get_site_xpos('robot0:grip')
         dt = self.sim.nsubsteps * self.sim.model.opt.timestep
         grip_velp = self.sim.data.get_site_xvelp('robot0:grip') * dt
         robot_qpos, robot_qvel = utils.robot_get_obs(self.sim)
+
+        ##cv2.imshow("image", a[0]);
         if self.has_object:
             object_pos = self.sim.data.get_site_xpos('object0')
             # rotations

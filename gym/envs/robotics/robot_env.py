@@ -89,6 +89,10 @@ class RobotEnv(gym.GoalEnv):
             # self.viewer.finish()
             self.viewer = None
             self._viewers = {}
+    def get_image(self):
+        return self._get_image()
+    def set_rotation(self,rotation):
+        self.set_rotation(rotation)
 
     def render(self, mode='human', width=DEFAULT_SIZE, height=DEFAULT_SIZE):
         self._render_callback()

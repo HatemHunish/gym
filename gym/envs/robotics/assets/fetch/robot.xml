@@ -62,12 +62,23 @@
 								<joint armature="2.7538" axis="1 0 0" damping="3.5247" frictionloss="0" limited="false" name="robot0:forearm_roll_joint" stiffness="10"></joint>
 								<geom mesh="robot0:forearm_roll_link" name="robot0:forearm_roll_link" material="robot0:arm_mat"></geom>
 								<body name="robot0:wrist_flex_link" pos="0.1245 0 0">
+										<body name="robot0:wrist_camera_link" pos="0.055 0 0.0225">
+												<body name="robot0:wrist_camera_rgb_frame" pos="0 0 -0.12">
+													<body name="robot0:wrist_camera_rgb_optical_frame" pos="0 0 0" quat="0.5 -0.5 0.5 -0.5">
+														<camera euler="3.1415 0 0" fovy="80" name="wrist_camera_rgb" pos="0 0 0"></camera>
+													</body>
+												</body>
+												<body name="robot0:wrist_camera_depth_frame" pos="0 0.045 0">
+													<body name="robot0:wrist_camera_depth_optical_frame" pos="0 0 0" quat="0.5 -0.5 0.5 -0.5"></body>
+												</body>
+											</body>
 									<inertial diaginertia="0.0042 0.0042 0.0018" mass="1.725" pos="0.0882 0.0009 -0.0001" quat="0.4895 0.4895 0.5103 0.5103"></inertial>
 									<joint axis="0 1 0" name="robot0:wrist_flex_joint" range="-2.16 2.16"></joint>
 									<geom mesh="robot0:wrist_flex_link" name="robot0:wrist_flex_link" material="robot0:arm_mat" class="robot0:blue"></geom>
 									<body name="robot0:wrist_roll_link" pos="0.1385 0 0">
+									
 										<inertial diaginertia="0.0001 0.0001 0.0001" mass="0.1354" pos="0.0095 0.0004 -0.0002"></inertial>
-										<joint axis="1 0 0" limited="false" name="robot0:wrist_roll_joint"></joint>
+										<joint axis="1 0 0" name="robot0:wrist_roll_joint" range="-1.58 1.58"></joint>
 										<geom mesh="robot0:wrist_roll_link" name="robot0:wrist_roll_link" material="robot0:arm_mat"></geom>
 										<body euler="0 0 0" name="robot0:gripper_link" pos="0.1664 0 0">
 											<inertial diaginertia="0.0024 0.0019 0.0013" mass="1.5175" pos="-0.09 -0.0001 -0.0017" quat="0 0.7071 0 0.7071"></inertial>
@@ -117,7 +128,11 @@
 			<geom mesh="robot0:torso_fixed_link" name="robot0:torso_fixed_link" class="robot0:blue"></geom>
 		</body>
 		<body name="robot0:external_camera_body_0" pos="0 0 0">
-			<camera euler="0 0.75 1.57" fovy="43.3" name="external_camera_0" pos="1.3 0 1.2"></camera>
+			<camera euler="0 0.0 1.57" fovy="100" name="external_camera_0" pos="0.7 0  0.7"></camera>
+		</body>																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								
+		<body name="robot0:external_camera_body_1" pos="0 0 0">
+			<camera euler="0.0 -0.25 1.57" fovy="100" name="external_camera_1" pos="0.3 0  0.7"></camera>
 		</body>
 	</body>
 </mujoco>
+												
